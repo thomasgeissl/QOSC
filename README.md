@@ -2,7 +2,7 @@ QOSC
 ===
 Description
 ---
-QOSC wrapper for oscpack.
+QOSC is a wrapper of oscpack, it allows to send and receive osc data within Qt.
 This is a work in progress and definitely needs some time and care.
 
 Dependencies
