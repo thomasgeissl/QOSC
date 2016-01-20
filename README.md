@@ -5,6 +5,11 @@ Description
 QOSC is a wrapper of oscpack, it allows to send and receive osc data within Qt.
 This is a work in progress and definitely needs some time and care.
 
+Build status
+---
+[![Build Status](https://travis-ci.org/thomasgeissl/QOSC.svg?branch=master)](https://travis-ci.org/thomasgeissl/QOSC)
+
+
 Dependencies
 ---
 * https://github.com/MariadeAnton/oscpack/ (already included)
