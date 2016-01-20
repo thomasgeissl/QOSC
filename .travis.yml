@@ -1,0 +1,7 @@
+os:
+    - linux
+    - osx
+
+language: cpp
+install: . scripts/ci/$TRAVIS_OS_NAME/install.sh
+script: . scripts/ci/common/script.sh

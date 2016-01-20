@@ -48,4 +48,5 @@ SOURCES += $$PWD/libs/oscpack/osc/OscPrintReceivedElements.cpp
 SOURCES += $$PWD/libs/oscpack/osc/OscReceivedElements.cpp
 SOURCES += $$PWD/libs/oscpack/osc/OscTypes.cpp
 
-DISTFILES += $$PWD/README.md
+DISTFILES += $$PWD/README.md \
+    $$PWD/.travis.yml
