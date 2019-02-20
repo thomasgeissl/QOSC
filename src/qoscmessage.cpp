@@ -206,6 +206,5 @@ QByteArray QOSCMessage::getArgumentAsBlob(int index)
 int QOSCMessage::getArgumentAsTime(int index)
 {
     return ((QOSCArgument_time*) _arguments[index])->_value;
-
 }
 

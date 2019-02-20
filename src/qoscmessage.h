@@ -10,9 +10,9 @@
 
 class QOSCMessage : public QObject
 {
-//    Q_OBJECT
+    Q_OBJECT
 public:
-    explicit QOSCMessage(QString address, QObject *parent = 0);
+    explicit QOSCMessage(QString address, QObject *parent = nullptr);
     virtual ~QOSCMessage();
 
     QOSCMessage* add(int value);

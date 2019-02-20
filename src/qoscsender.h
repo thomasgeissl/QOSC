@@ -13,17 +13,19 @@ class QOSCSender : public QObject
 {
     Q_OBJECT
 public:
-    explicit QOSCSender(QString remoteHostS, unsigned int remotePortUI, QObject *parent = 0);
-    void send(QOSCMessage *message);
+    explicit QOSCSender(QObject *parent = nullptr);
+    explicit QOSCSender(QString remoteHost, int remotePort, QObject *parent = nullptr);
+    void send(QOSCMessage *message, bool bundled = true);
     void send(QOSCBundle bundle);
 protected:
 private:
     UdpTransmitSocket *_socket;
-    QString _remoteHostS;
-    unsigned int _remotePortUI;
+    QString _remoteHost;
+    int _remotePort;
 public slots:
-    void setRemoteHost(QString remoteHostS);
-    void setRemotePort(unsigned int remotePortUI);
+    void setRemoteHost(QString remoteHost);
+    void setRemotePort(int remotePort);
+    void setup(QString remoteHost, int remotePort);
     void setup();
 };
 

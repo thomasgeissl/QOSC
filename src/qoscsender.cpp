@@ -1,23 +1,36 @@
 #include "qoscsender.h"
 
 #include <QDebug>
-QOSCSender::QOSCSender(QString remoteHostS, unsigned int remotePortUI, QObject *parent) :
+QOSCSender::QOSCSender(QObject *parent) : QObject(parent){
+
+}
+QOSCSender::QOSCSender(QString remoteHost, int remotePort, QObject *parent) :
     QObject(parent),
-    _remoteHostS(remoteHostS),
-    _remotePortUI(remotePortUI)
+    _remoteHost(remoteHost),
+    _remotePort(remotePort)
 {
+    setup();
+}
+void QOSCSender::setup(QString remoteHost, int remotePort)
+{
+    _remoteHost = remoteHost;
+    _remotePort = remotePort;
     setup();
 }
 void QOSCSender::setup()
 {
-    _socket = new UdpTransmitSocket(IpEndpointName(_remoteHostS.toStdString().c_str(), _remotePortUI));
+    _socket = new UdpTransmitSocket(IpEndpointName(_remoteHost.toStdString().c_str(), _remotePort));
 }
 
-void QOSCSender::send(QOSCMessage *message)
+void QOSCSender::send(QOSCMessage *message, bool bundled)
 {
     char buffer[1024];
     osc::OutboundPacketStream packet(buffer, 1024);
-    packet << osc::BeginBundleImmediate << osc::BeginMessage(message->getAddress().toStdString().c_str());
+    if(bundled){
+        packet << osc::BeginBundleImmediate << osc::BeginMessage(message->getAddress().toStdString().c_str());
+    }else{
+        packet << osc::BeginMessage(message->getAddress().toStdString().c_str());
+    }
     foreach(QOSCArgument *argument, message->getArguments())
     {
 
@@ -58,8 +71,12 @@ void QOSCSender::send(QOSCMessage *message)
         }
     }
 
-    packet << osc::EndMessage
-    << osc::EndBundle;
+    if(bundled){
+        packet << osc::EndMessage
+        << osc::EndBundle;
+    }else{
+        packet << osc::EndMessage;
+    }
     _socket->Send(packet.Data(), packet.Size());
 
 /*
@@ -96,11 +113,11 @@ void QOSCSender::send(QOSCBundle bundle)
 //    _socket->Send(message.getPacket()->Data(), message.getPacket()->Size());
 }
 
-void QOSCSender::setRemoteHost(QString remoteHostS)
+void QOSCSender::setRemoteHost(QString remoteHost)
 {
-    _remoteHostS = remoteHostS;
+    _remoteHost = remoteHost;
 }
-void QOSCSender::setRemotePort(unsigned int remotePortUI)
+void QOSCSender::setRemotePort(int remotePort)
 {
-    _remotePortUI = remotePortUI;
+    _remotePort = remotePort;
 }
